@@ -8,7 +8,8 @@ class HeadersPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       // body: HeaderCuadrado(),
-      body: HeaderBordesRedondeados(),
+      // body: HeaderBordesRedondeados(),
+      body: HeaderDiagonal()
     );
   }
 }
