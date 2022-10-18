@@ -11,7 +11,8 @@ class HeadersPage extends StatelessWidget {
       // body: HeaderBordesRedondeados(),
       // body: HeaderDiagonal(),
       // body: HeaderTriangulo(),
-      body: HeaderPico(),
+      // body: HeaderPico(),
+      body: HeaderCurvo(),
     );
   }
 }
