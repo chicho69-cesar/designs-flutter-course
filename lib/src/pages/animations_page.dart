@@ -37,7 +37,12 @@ class _AnimatedSquareState extends State<AnimatedSquare> with SingleTickerProvid
     rotation = Tween(
       begin: 0.0,
       end: 2.0 * math.pi
-    ).animate(controller);
+    ).animate(
+      CurvedAnimation(
+        parent: controller, 
+        curve: Curves.easeOut
+      )
+    );
 
     /* Con el event listener lo que hacemos es tener control del flujo de la animacion
     mientras esta siendo reproducida, de esta forma, podemos tener control de lo que sucede
