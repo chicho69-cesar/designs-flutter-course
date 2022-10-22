@@ -49,7 +49,18 @@ class _AnimatedSquareState extends State<AnimatedSquare> with SingleTickerProvid
 
   @override
   Widget build(BuildContext context) {
-    return const _Rectangle();
+    controller.forward();
+
+    return AnimatedBuilder(
+      animation: controller,
+      child: const _Rectangle(),
+      builder: (BuildContext context, Widget? child) {
+        return Transform.rotate( // widget para hacer rotaciones en la animacion
+          angle: rotation.value,
+          child: child
+        );
+      },
+    );
   }
 }
 
