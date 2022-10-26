@@ -24,16 +24,19 @@ class AnimatedSquare extends StatefulWidget {
 }
 
 class _AnimatedSquareState extends State<AnimatedSquare> with SingleTickerProviderStateMixin {
+  /* Controlador y animacion para el contenedor */
   late AnimationController controller;
   late Animation<double> rotation;
 
   @override
   void initState() {
+    /* Instanciamos el controlador */
     controller = AnimationController(
       vsync: this, 
       duration: const Duration(milliseconds: 4000)
     );
 
+    /* Creamos la animacion */
     rotation = Tween(
       begin: 0.0,
       end: 2.0 * math.pi
@@ -85,6 +88,7 @@ class _AnimatedSquareState extends State<AnimatedSquare> with SingleTickerProvid
   }
 }
 
+/* Widget a animar */
 class _Rectangle extends StatelessWidget {
   const _Rectangle({
     Key? key,
