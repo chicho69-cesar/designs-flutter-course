@@ -53,7 +53,18 @@ class _AnimatedSquareState extends State<AnimatedSquare> with SingleTickerProvid
     opacity = Tween(
       begin: 0.1,
       end: 1.0
-    ).animate(controller);
+    ).animate(
+      CurvedAnimation(
+        parent: controller, 
+        /* El Interval es un tipo de Curve especial, que nos permite modificar el tiempo
+        que dura una animacion en porcentaje del tiempo de la animacion, esto con el fin de que si tenemos varias animaciones 
+        estas puedan tener diferentes tiempos cada una */
+        curve: const Interval(
+          0, 0.25,
+          curve: Curves.easeOut
+        )
+      )
+    );
 
     /* Con el event listener lo que hacemos es tener control del flujo de la animacion
     mientras esta siendo reproducida, de esta forma, podemos tener control de lo que sucede
