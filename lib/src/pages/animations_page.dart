@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'dart:math' as math;
 
 class AnimationsPage extends StatelessWidget {
@@ -27,6 +28,7 @@ class _AnimatedSquareState extends State<AnimatedSquare> with SingleTickerProvid
   /* Controlador y animacion para el contenedor */
   late AnimationController controller;
   late Animation<double> rotation;
+  late Animation<double> opacity;
 
   @override
   void initState() {
@@ -46,6 +48,12 @@ class _AnimatedSquareState extends State<AnimatedSquare> with SingleTickerProvid
         curve: Curves.easeOut
       )
     );
+
+    /* Creamos la animacion de opacidad */
+    opacity = Tween(
+      begin: 0.1,
+      end: 1.0
+    ).animate(controller);
 
     /* Con el event listener lo que hacemos es tener control del flujo de la animacion
     mientras esta siendo reproducida, de esta forma, podemos tener control de lo que sucede
@@ -78,10 +86,13 @@ class _AnimatedSquareState extends State<AnimatedSquare> with SingleTickerProvid
     return AnimatedBuilder(
       animation: controller,
       child: const _Rectangle(),
-      builder: (BuildContext context, Widget? child) {
+      builder: (BuildContext context, Widget? childRectangle) {
         return Transform.rotate( // widget para hacer rotaciones en la animacion
           angle: rotation.value,
-          child: child
+          child: Opacity(
+            opacity: opacity.value,
+            child: childRectangle,
+          ),
         );
       },
     );
