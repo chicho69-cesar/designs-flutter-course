@@ -29,6 +29,7 @@ class _AnimatedSquareState extends State<AnimatedSquare> with SingleTickerProvid
   late AnimationController controller;
   late Animation<double> rotation;
   late Animation<double> opacity;
+  late Animation<double> moveRight;
 
   @override
   void initState() {
@@ -66,6 +67,16 @@ class _AnimatedSquareState extends State<AnimatedSquare> with SingleTickerProvid
       )
     );
 
+    moveRight = Tween(
+      begin: 0.0,
+      end: 200.0
+    ).animate(
+      CurvedAnimation(
+        parent: controller, 
+        curve: Curves.easeOut
+      )
+    );
+
     /* Con el event listener lo que hacemos es tener control del flujo de la animacion
     mientras esta siendo reproducida, de esta forma, podemos tener control de lo que sucede
     mas facilmente */
@@ -98,11 +109,14 @@ class _AnimatedSquareState extends State<AnimatedSquare> with SingleTickerProvid
       animation: controller,
       child: const _Rectangle(),
       builder: (BuildContext context, Widget? childRectangle) {
-        return Transform.rotate( // widget para hacer rotaciones en la animacion
-          angle: rotation.value,
-          child: Opacity(
-            opacity: opacity.value,
-            child: childRectangle,
+        return Transform.translate(
+          offset: Offset(moveRight.value, 0),
+          child: Transform.rotate( // widget para hacer rotaciones en la animacion
+            angle: rotation.value,
+            child: Opacity(
+              opacity: opacity.value,
+              child: childRectangle,
+            ),
           ),
         );
       },
