@@ -30,6 +30,7 @@ class _AnimatedSquareState extends State<AnimatedSquare> with SingleTickerProvid
   late Animation<double> rotation;
   late Animation<double> opacity;
   late Animation<double> moveRight;
+  late Animation<double> zoom;
 
   @override
   void initState() {
@@ -41,40 +42,34 @@ class _AnimatedSquareState extends State<AnimatedSquare> with SingleTickerProvid
 
     /* Creamos la animacion */
     rotation = Tween(
-      begin: 0.0,
-      end: 2.0 * math.pi
+      begin: 0.0, end: 2.0 * math.pi
     ).animate(
-      CurvedAnimation(
-        parent: controller, 
-        curve: Curves.easeOut
-      )
+      CurvedAnimation(parent: controller, curve: Curves.easeOut)
     );
 
     /* Creamos la animacion de opacidad */
     opacity = Tween(
-      begin: 0.1,
-      end: 1.0
+      begin: 0.1, end: 1.0
     ).animate(
       CurvedAnimation(
         parent: controller, 
         /* El Interval es un tipo de Curve especial, que nos permite modificar el tiempo
         que dura una animacion en porcentaje del tiempo de la animacion, esto con el fin de que si tenemos varias animaciones 
         estas puedan tener diferentes tiempos cada una */
-        curve: const Interval(
-          0, 0.25,
-          curve: Curves.easeOut
-        )
+        curve: const Interval(0, 0.25, curve: Curves.easeOut)
       )
     );
 
     moveRight = Tween(
-      begin: 0.0,
-      end: 200.0
+      begin: 0.0, end: 200.0
     ).animate(
-      CurvedAnimation(
-        parent: controller, 
-        curve: Curves.easeOut
-      )
+      CurvedAnimation(parent: controller, curve: Curves.easeOut)
+    );
+
+    zoom = Tween(
+      begin: 0.0, end: 2.0
+    ).animate(
+      CurvedAnimation(parent: controller, curve: Curves.easeOut)
     );
 
     /* Con el event listener lo que hacemos es tener control del flujo de la animacion
@@ -109,13 +104,16 @@ class _AnimatedSquareState extends State<AnimatedSquare> with SingleTickerProvid
       animation: controller,
       child: const _Rectangle(),
       builder: (BuildContext context, Widget? childRectangle) {
-        return Transform.translate(
+        return Transform.translate( // widget para hacer movimientos en la animacion
           offset: Offset(moveRight.value, 0),
           child: Transform.rotate( // widget para hacer rotaciones en la animacion
             angle: rotation.value,
             child: Opacity(
               opacity: opacity.value,
-              child: childRectangle,
+              child: Transform.scale( // widget para hacer escalaciones en la animacion
+                scale: zoom.value,
+                child: childRectangle
+              ),
             ),
           ),
         );
