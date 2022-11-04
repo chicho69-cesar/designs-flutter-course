@@ -29,6 +29,7 @@ class _AnimatedSquareState extends State<AnimatedSquare> with SingleTickerProvid
   late AnimationController controller;
   late Animation<double> rotation;
   late Animation<double> opacity;
+  late Animation<double> opacityOut;
   late Animation<double> moveRight;
   late Animation<double> zoom;
 
@@ -57,6 +58,15 @@ class _AnimatedSquareState extends State<AnimatedSquare> with SingleTickerProvid
         que dura una animacion en porcentaje del tiempo de la animacion, esto con el fin de que si tenemos varias animaciones 
         estas puedan tener diferentes tiempos cada una */
         curve: const Interval(0, 0.25, curve: Curves.easeOut)
+      )
+    );
+
+    opacityOut = Tween(
+      begin: 0.0, end: 1.0
+    ).animate(
+      CurvedAnimation(
+        parent: controller, 
+        curve: const Interval(0.75, 1, curve: Curves.easeOut)
       )
     );
 
@@ -109,7 +119,7 @@ class _AnimatedSquareState extends State<AnimatedSquare> with SingleTickerProvid
           child: Transform.rotate( // widget para hacer rotaciones en la animacion
             angle: rotation.value,
             child: Opacity(
-              opacity: opacity.value,
+              opacity: opacity.value - opacityOut.value,
               child: Transform.scale( // widget para hacer escalaciones en la animacion
                 scale: zoom.value,
                 child: childRectangle
